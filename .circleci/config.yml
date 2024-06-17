@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build:
     docker:
@@ -10,3 +9,4 @@ jobs:
           command: npm install
       - run:
           command: npm test
+          
