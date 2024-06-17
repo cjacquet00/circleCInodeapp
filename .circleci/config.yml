@@ -3,13 +3,19 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.18.1
+    environment:
+      NPM_VERSION: "5.7.0"
     steps: 
       - checkout
       - restore_cache:
           key: v1-dependencies-{{ checksum "package.json"}}
       - run:
-          command: npm install
-
+        name: Install dependencies
+        command: |
+          if [ ! -d node_modules ]; then
+            sudo npm install -g npm@$NPM_VERSION
+            npm ci
+          fi
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json"}}
           paths:
